@@ -1,5 +1,5 @@
-circular-hos
-============
+Using Circular Programs for Higher-Order Syntax
+===============================================
 
 Implementats higher-order syntax for embedded languages with binding, as described in Using Circular Programs for Higher-Order Syntax (Axelsson and Claessen, ICFP 2013).
 
