@@ -41,7 +41,7 @@ lam f = inject $ Lam n body
 maxLam :: (Lam :<: s, Functor s, Foldable s) => Term s -> Name
 maxLam (Term f)
     | Just (Lam n _) <- proj f = n
-    | otherwise                = maximum $ (0:) $ toList $ fmap maxLam f
+    | otherwise = maximum $ (dummy:) $ toList $ fmap maxLam f
 
 
 
