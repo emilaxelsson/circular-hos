@@ -8,9 +8,9 @@
 
 module ExpCompdata where
 
-import Data.Foldable (toList)
+import Data.Foldable (Foldable, toList)
 import Data.Comp
-import Data.Comp.Derive
+import Data.Comp.Show
 
 
 
@@ -32,16 +32,16 @@ dummy = 0
 app :: (App :<: s) => Term s -> Term s -> Term s
 app f a = inject (App f a)
 
-lam :: (Var :<: s, Lam :<: s, Functor s, Foldable s) => (Term s -> Term s) -> Term s
+lam :: (Var :<: s, Lam :<: s, Foldable s) => (Term s -> Term s) -> Term s
 lam f = inject $ Lam n body
   where
     body = f (inject (Var n))
     n    = succ (maxLam body)
 
-maxLam :: (Lam :<: s, Functor s, Foldable s) => Term s -> Name
+maxLam :: (Lam :<: s, Foldable s) => Term s -> Name
 maxLam (Term f)
     | Just (Lam n _) <- proj f = n
-    | otherwise = maximum $ (dummy:) $ toList $ fmap maxLam f
+    | otherwise = maximum $ (dummy:) $ map maxLam $ toList f
 
 
 
